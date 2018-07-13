@@ -443,16 +443,65 @@ int eProducto_manejarStockProductos(ArrayList* this, ArrayList* that, int operac
     //operacion 1 agrega, operacion -1 descuenta
     int returnAux = CHECK_POINTER;
     void* pElement = NULL;
+    int cantidadDisponible;
+    int cantidadIngresada;
+    int cantidadCalculada;
     int id;
-    int cantidad;
     char confirmacion;
+    char* tituloDescontar = "DESCONTAR PRODUCTOS A DEPOSITO";
+    char* tituloAgregar = "AGREGAR PRODUCTOS A DEPOSITO";
 
-    limpiarPantallaYMostrarTitulo("");
+    if(operacion > 0)
+    {
+        limpiarPantallaYMostrarTitulo(tituloAgregar);
+    }
+    else
+    {
+        limpiarPantallaYMostrarTitulo(tituloDescontar);
+    }
+
     if(this != NULL && that != NULL)
     {
         returnAux = OK;
-        id = pedirIntValido("\nIngrese Codigo de producto","\nCodigo de producto no valido. Reingrese por favor", PRODUCTO_ID_MIN, PRODUCTO_ID_MAX);
+        id = pedirIntValido(PRODUCTO_MSJ_INGRESE_ID, PRODUCTO_MSJ_REINGRESE_ID, PRODUCTO_ID_MIN, PRODUCTO_ID_MAX);
+        pElement = eGestion_buscarPorId(this, eProducto_getId, id);
 
+        if(pElement == NULL)
+        {
+            pElement = eGestion_buscarPorId(that, eProducto_getId, id);
+
+        }
+
+        if(pElement == NULL)
+        {
+            imprimirEnPantalla("\nNo se encontro el producto ingresado en ningun deposito");
+        }
+        else
+        {
+            eProducto_mostrarUno(pElement);
+            cantidadDisponible = eProducto_getCantidad(pElement);
+            printf("\nLa cantidad disponible es de %d", cantidadDisponible);
+            if(operacion < 0)
+            {
+                cantidadIngresada = pedirIntValido("\nIngrese la cantidad: ", "\nLa cantidad no es valida. Reingrese por favor: ", 1, cantidadDisponible);
+            }
+            else
+            {
+                cantidadIngresada = pedirIntValido("\nIngrese la cantidad: ", "\nLa cantidad no es valida. Reingrese por favor: ", 1, PRODUCTO_CANT_MAX);
+            }
+            cantidadCalculada = (cantidadDisponible + (operacion * cantidadIngresada));
+            printf("\nNueva cantidad: %d",cantidadCalculada);
+            confirmacion = pedirConfirmacion("\nConfirma que desea modificar la cantidad");
+
+            if(confirmacion == 'S')
+            {
+                eProducto_setCantidad(pElement, cantidadCalculada);
+            }
+            else
+            {
+                imprimirEnPantalla("\nSe cancelo la gestion");
+            }
+        }
     }
     else
     {

@@ -26,7 +26,7 @@
 1531511156 d:\github\ponti.final2018\gestion.h
 	"ArrayList.h"
 
-1531512935 source:d:\github\ponti.final2018\main.c
+1531514398 source:d:\github\ponti.final2018\main.c
 	<stdio.h>
 	<stdlib.h>
 	"General.h"
@@ -36,7 +36,7 @@
 
 1531508837 d:\github\ponti.final2018\menu.h
 
-1531511734 d:\github\ponti.final2018\producto.h
+1531514259 d:\github\ponti.final2018\producto.h
 	"General.h"
 	"Gestion.h"
 	"Menu.h"
@@ -50,6 +50,6 @@
 	"General.h"
 	<stdio.h>
 
-1531512904 source:d:\github\ponti.final2018\producto.c
+1531514948 source:d:\github\ponti.final2018\producto.c
 	"Producto.h"
 
