@@ -248,21 +248,28 @@ void* eProducto_parserAVoid(char* this, int bufferSize)
     return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-void eProducto_cargarArchivos(ArrayList* this, ArrayList* that)
+int eProducto_cargarArchivos(ArrayList* this, ArrayList* that)
 {
-    eGestion_cargarArchivoTexto(this,
-                                eProducto_parserAVoid,
-                                eProducto_compararPorId,
-                                "CARGAR ARCHIVO DEPOSITO 0",
-                                2000,
-                                "dep0.csv");
+    int returnAux = CHECK_POINTER;
+    if(this != NULL && that != NULL)
+    {
+        returnAux = OK;
 
-    eGestion_cargarArchivoTexto(that,
-                                eProducto_parserAVoid,
-                                eProducto_compararPorId,
-                                "CARGAR ARCHIVO DEPOSITO 1",
-                                2000,
-                                "dep1.csv");
+        eGestion_cargarArchivoTexto(this,
+                                    eProducto_parserAVoid,
+                                    eProducto_compararPorId,
+                                    "CARGAR ARCHIVO DEPOSITO 0",
+                                    2000,
+                                    "dep0.csv");
+
+        eGestion_cargarArchivoTexto(that,
+                                    eProducto_parserAVoid,
+                                    eProducto_compararPorId,
+                                    "CARGAR ARCHIVO DEPOSITO 1",
+                                    2000,
+                                    "dep1.csv");
+    }
+    return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
 int eProducto_elegirDeposito()
@@ -277,10 +284,13 @@ int eProducto_elegirDeposito()
     return eMenu_pedirOpcion(&menuPrincipal);
 }
 //-----------------------------------------------------------------------------------------------//
-void eProducto_listarDeposito(ArrayList* this, ArrayList* that)
+int eProducto_listarDeposito(ArrayList* this, ArrayList* that)
 {
+    int returnAux = CHECK_POINTER;
+
     if(this != NULL && that != NULL)
     {
+        returnAux = OK;
         switch(eProducto_elegirDeposito())
         {
             case 1:
@@ -290,7 +300,6 @@ void eProducto_listarDeposito(ArrayList* this, ArrayList* that)
                                  PRODUCTO_MOSTRAR_UNO_CABECERA,
                                  PRODUCTO_MSJ_LISTA_VACIA,
                                  PRODUCTO_MOSTRAR_UNO_PAGINADO);
-                                 pausa();
                 break;
             case 2:
                 eGestion_listado(that,
@@ -299,7 +308,6 @@ void eProducto_listarDeposito(ArrayList* this, ArrayList* that)
                                  PRODUCTO_MOSTRAR_UNO_CABECERA,
                                  PRODUCTO_MSJ_LISTA_VACIA,
                                  PRODUCTO_MOSTRAR_UNO_PAGINADO);
-                                 pausa();
                 break;
             case 0:
                 break;
@@ -307,12 +315,15 @@ void eProducto_listarDeposito(ArrayList* this, ArrayList* that)
     }
     else
     {
-        imprimirEnPantalla("\nError en asignacion de punteros");pausa();
+        imprimirEnPantalla("\nError en asignacion de punteros");
     }
+    pausa();
+    return returnAux;
 }
 //-----------------------------------------------------------------------------------------------//
-void eProducto_moverProductos(ArrayList* this, ArrayList* that)
+int eProducto_moverProductos(ArrayList* this, ArrayList* that)
 {
+    int returnAux = CHECK_POINTER;
     void* pElement = NULL;
     char confirmacion;
 
@@ -364,7 +375,7 @@ void eProducto_moverProductos(ArrayList* this, ArrayList* that)
                     {
                         imprimirEnPantalla(MSJ_CANCELO_GESTION);
                     }
-                    //returnAux = OK;
+                    returnAux = OK;
                 }
                 break;
             case 2:
@@ -410,7 +421,7 @@ void eProducto_moverProductos(ArrayList* this, ArrayList* that)
                     {
                         imprimirEnPantalla(MSJ_CANCELO_GESTION);
                     }
-                    //returnAux = OK;
+                    returnAux = OK;
                 }
 
                 break;
@@ -424,7 +435,32 @@ void eProducto_moverProductos(ArrayList* this, ArrayList* that)
     }
 
     pausa();
+    return returnAux;
+}
+//-----------------------------------------------------------------------------------------------//
+int eProducto_manejarStockProductos(ArrayList* this, ArrayList* that, int operacion)
+{
+    //operacion 1 agrega, operacion -1 descuenta
+    int returnAux = CHECK_POINTER;
+    void* pElement = NULL;
+    int id;
+    int cantidad;
+    char confirmacion;
 
+    limpiarPantallaYMostrarTitulo("");
+    if(this != NULL && that != NULL)
+    {
+        returnAux = OK;
+        id = pedirIntValido("\nIngrese Codigo de producto","\nCodigo de producto no valido. Reingrese por favor", PRODUCTO_ID_MIN, PRODUCTO_ID_MAX);
+
+    }
+    else
+    {
+        imprimirEnPantalla("\nError en asignacion de punteros");pausa();
+    }
+
+    pausa();
+    return returnAux;
 }
 /**************************** ORDENAMIENTO *******************************************************/
 int eProducto_compararPorId(void* this, void* that)

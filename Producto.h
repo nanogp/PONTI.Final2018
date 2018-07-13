@@ -54,9 +54,10 @@ void* eProducto_newParam(int id, char* descripcion, int cantidad);
 int eProducto_modificarUno(void* this);
 char* eProducto_parserATexto(void* this, int bufferSize);
 void* eProducto_parserAVoid(char* this, int bufferSize);
-void eProducto_cargarArchivos(ArrayList* this, ArrayList* that);
-void eProducto_listarDeposito(ArrayList* this, ArrayList* that);
-void eProducto_moverProductos(ArrayList* this, ArrayList* that);
+int eProducto_cargarArchivos(ArrayList* this, ArrayList* that);
+int eProducto_listarDeposito(ArrayList* this, ArrayList* that);
+int eProducto_moverProductos(ArrayList* this, ArrayList* that);
+int eProducto_manejarStockProductos(ArrayList* this, ArrayList* that, int operacion);
 
 /**************************** LISTADO DE DATOS ***************************************************/
 void eProducto_mostrarUno(void* producto);
