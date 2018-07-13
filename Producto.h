@@ -55,6 +55,7 @@ int eProducto_modificarUno(void* this);
 char* eProducto_parserATexto(void* this, int bufferSize);
 void* eProducto_parserAVoid(char* this, int bufferSize);
 void eProducto_cargarArchivos(ArrayList* this, ArrayList* that);
+void eProducto_listarDeposito(ArrayList* this, ArrayList* that);
 
 /**************************** LISTADO DE DATOS ***************************************************/
 void eProducto_mostrarUno(void* producto);
@@ -96,7 +97,7 @@ int eProducto_ordenarPorDescripcion(ArrayList* this);
 
 /**************************** LISTADOS ***********************************************************/
 #define PRODUCTO_MOSTRAR_UNO_MASCARA "\n%d \t %-10s \t %d"
-#define PRODUCTO_MOSTRAR_UNO_CABECERA "\nID \t DESCRIPCION \t\t CANTIDAD\n-- \t ---- \t\t -----"
+#define PRODUCTO_MOSTRAR_UNO_CABECERA "\nID \t DESCRIPCION \t CANTIDAD\n-- \t ----------- \t --------"
 #define PRODUCTO_MOSTRAR_UNO_PAGINADO 20
 
 /**************************** ORDENAMIENTO *******************************************************/

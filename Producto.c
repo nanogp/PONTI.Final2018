@@ -262,7 +262,46 @@ void eProducto_cargarArchivos(ArrayList* this, ArrayList* that)
                                 eProducto_compararPorId,
                                 "CARGAR ARCHIVO DEPOSITO 1",
                                 2000,
-                                "dep0.csv");
+                                "dep1.csv");
+}
+//-----------------------------------------------------------------------------------------------//
+void eProducto_listarDeposito(ArrayList* this, ArrayList* that)
+{
+    if(this != NULL && that != NULL)
+    {
+        eMenu menuPrincipal = {/*titulo del menu*/{"ELIJA DEPOSITO PARA LISTAR"},
+                               /*cantidad de opciones*/3,
+                               /*codigos*/{1,2,
+                               0},
+                               /*descripciones*/{"\n 1. Deposito 0"
+                                                 "\n 2. Deposito 1"
+                                                 "\n 0. Cancelar"}};
+        int opcion;
+        opcion = eMenu_pedirOpcion(&menuPrincipal);
+        switch(opcion)
+        {
+            case 1:
+                eGestion_listado(this,
+                                 eProducto_mostrarUno,
+                                 PRODUCTO_LISTADO_TITULO,
+                                 PRODUCTO_MOSTRAR_UNO_CABECERA,
+                                 PRODUCTO_MSJ_LISTA_VACIA,
+                                 PRODUCTO_MOSTRAR_UNO_PAGINADO);
+                                 pausa();
+                break;
+            case 2:
+                eGestion_listado(that,
+                                 eProducto_mostrarUno,
+                                 PRODUCTO_LISTADO_TITULO,
+                                 PRODUCTO_MOSTRAR_UNO_CABECERA,
+                                 PRODUCTO_MSJ_LISTA_VACIA,
+                                 PRODUCTO_MOSTRAR_UNO_PAGINADO);
+                                 pausa();
+                break;
+            case 0:
+                break;
+        }
+    }
 }
 /**************************** ORDENAMIENTO *******************************************************/
 int eProducto_compararPorId(void* this, void* that)

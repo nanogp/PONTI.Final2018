@@ -10,14 +10,16 @@ int main()
 {
     int returnAux;
     eMenu menuPrincipal = {/*titulo del menu*/{"FINAL 2018 PONTI"},
-                           /*cantidad de opciones*/6,
-                           /*codigos*/{1,2,3,4,5,
+                           /*cantidad de opciones*/8,
+                           /*codigos*/{1,2,3,4,5,6,7,
                            0},
                            /*descripciones*/{"\n 1. CARGAR DEPOSITOS"
                                              "\n 2. LISTAR PRODUCTOS DE DEPOSITO"
                                              "\n 3. MOVER PRODUCTOS A DEPOSITO"
                                              "\n 4. DESCONTAR PRODUCTOS DE DEPOSITO"
                                              "\n 5. AGREGAR PRODUCTOS A DEPOSITO"
+                                             "\n 6. Lista 0"
+                                             "\n 7. Lista 1"
                                              "\n 0. SALIR DEL PROGRAMA"}};
     int opcion;
     char salirDelPrograma = 'N';
@@ -41,27 +43,13 @@ int main()
                 eProducto_cargarArchivos(listaDep0, listaDep1);
                 break;
             case 2:
-
+                eProducto_listarDeposito(listaDep0, listaDep1);
                 break;
             case 3:
                 break;
-            case 4:
-                eGestion_listado(listaDep0,
-                                 eProducto_mostrarUno,
-                                 PRODUCTO_LISTADO_TITULO,
-                                 PRODUCTO_MOSTRAR_UNO_CABECERA,
-                                 PRODUCTO_MSJ_LISTA_VACIA,
-                                 PRODUCTO_MOSTRAR_UNO_PAGINADO);
-                                 pausa();
+            case 6:
                 break;
-            case 5:
-                eGestion_listado(listaDep1,
-                                 eProducto_mostrarUno,
-                                 PRODUCTO_LISTADO_TITULO,
-                                 PRODUCTO_MOSTRAR_UNO_CABECERA,
-                                 PRODUCTO_MSJ_LISTA_VACIA,
-                                 PRODUCTO_MOSTRAR_UNO_PAGINADO);
-                                 pausa();
+            case 7:
                 break;
             case 0:
                 salirDelPrograma = pedirConfirmacion("Confirma que desea salir del programa?");
