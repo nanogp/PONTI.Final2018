@@ -46,6 +46,7 @@ int main()
                 eProducto_listarDeposito(listaDep0, listaDep1);
                 break;
             case 3:
+                eProducto_moverProductos(listaDep0, listaDep1);
                 break;
             case 6:
                 break;

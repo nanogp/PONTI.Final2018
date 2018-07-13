@@ -56,6 +56,7 @@ char* eProducto_parserATexto(void* this, int bufferSize);
 void* eProducto_parserAVoid(char* this, int bufferSize);
 void eProducto_cargarArchivos(ArrayList* this, ArrayList* that);
 void eProducto_listarDeposito(ArrayList* this, ArrayList* that);
+void eProducto_moverProductos(ArrayList* this, ArrayList* that);
 
 /**************************** LISTADO DE DATOS ***************************************************/
 void eProducto_mostrarUno(void* producto);

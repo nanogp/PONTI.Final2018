@@ -265,20 +265,23 @@ void eProducto_cargarArchivos(ArrayList* this, ArrayList* that)
                                 "dep1.csv");
 }
 //-----------------------------------------------------------------------------------------------//
+int eProducto_elegirDeposito()
+{
+    eMenu menuPrincipal = {/*titulo del menu*/{"ELIJA DEPOSITO ORIGEN"},
+                       /*cantidad de opciones*/3,
+                       /*codigos*/{1,2,
+                       0},
+                       /*descripciones*/{"\n 1. Deposito 0"
+                                         "\n 2. Deposito 1"
+                                         "\n 0. Cancelar"}};
+    return eMenu_pedirOpcion(&menuPrincipal);
+}
+//-----------------------------------------------------------------------------------------------//
 void eProducto_listarDeposito(ArrayList* this, ArrayList* that)
 {
     if(this != NULL && that != NULL)
     {
-        eMenu menuPrincipal = {/*titulo del menu*/{"ELIJA DEPOSITO PARA LISTAR"},
-                               /*cantidad de opciones*/3,
-                               /*codigos*/{1,2,
-                               0},
-                               /*descripciones*/{"\n 1. Deposito 0"
-                                                 "\n 2. Deposito 1"
-                                                 "\n 0. Cancelar"}};
-        int opcion;
-        opcion = eMenu_pedirOpcion(&menuPrincipal);
-        switch(opcion)
+        switch(eProducto_elegirDeposito())
         {
             case 1:
                 eGestion_listado(this,
@@ -302,6 +305,126 @@ void eProducto_listarDeposito(ArrayList* this, ArrayList* that)
                 break;
         }
     }
+    else
+    {
+        imprimirEnPantalla("\nError en asignacion de punteros");pausa();
+    }
+}
+//-----------------------------------------------------------------------------------------------//
+void eProducto_moverProductos(ArrayList* this, ArrayList* that)
+{
+    void* pElement = NULL;
+    char confirmacion;
+
+    if(this != NULL && that != NULL)
+    {
+        switch(eProducto_elegirDeposito())
+        {
+
+            case 1:
+                if(!eGestion_informarListadoVacio(this, PRODUCTO_MSJ_LISTA_VACIA))
+                {
+                    while(pElement == NULL)
+                    {
+                        eGestion_listado(this,
+                                 eProducto_mostrarUno,
+                                 PRODUCTO_LISTADO_TITULO,
+                                 PRODUCTO_MOSTRAR_UNO_CABECERA,
+                                 PRODUCTO_MSJ_LISTA_VACIA,
+                                 PRODUCTO_MOSTRAR_UNO_PAGINADO);
+                        saltoDeLinea();
+                        imprimirTitulo("MOVER PRODUCTO DE 0 A 1");
+                        pElement = eGestion_pedirIdYBuscar(this,
+                                                           eProducto_getId,
+                                                           PRODUCTO_MSJ_INGRESE_ID,
+                                                           PRODUCTO_MSJ_REINGRESE_ID,
+                                                           PRODUCTO_ID_MIN,
+                                                           PRODUCTO_ID_MAX);
+                        if(pElement == NULL)
+                        {
+                            imprimirEnPantalla("\nNo se encontro el ID ingresado");
+                            pausa();
+                        }
+                    }
+
+                    limpiarPantallaYMostrarTitulo("MOVER PRODUCTO DE 0 A 1");
+                    imprimirEnPantalla(PRODUCTO_MOSTRAR_UNO_CABECERA);
+                    eProducto_mostrarUno(pElement);
+                    confirmacion = pedirConfirmacion("\nConfirma que desea mover dicho producto");
+
+                    if(confirmacion == 'S')
+                    {
+                        pElement = this->pop(this, this->indexOf(this, pElement));
+                        that->add(that, pElement);
+                        this->sort(this, eProducto_compararPorId, ASC);
+                        this->sort(that, eProducto_compararPorId, ASC);
+                        imprimirEnPantalla("\nSe movio el producto del deposito 0 al 1");
+                    }
+                    else
+                    {
+                        imprimirEnPantalla(MSJ_CANCELO_GESTION);
+                    }
+                    //returnAux = OK;
+                }
+                break;
+            case 2:
+                if(!eGestion_informarListadoVacio(that, PRODUCTO_MSJ_LISTA_VACIA))
+                {
+                    while(pElement == NULL)
+                    {
+                        eGestion_listado(that,
+                                 eProducto_mostrarUno,
+                                 PRODUCTO_LISTADO_TITULO,
+                                 PRODUCTO_MOSTRAR_UNO_CABECERA,
+                                 PRODUCTO_MSJ_LISTA_VACIA,
+                                 PRODUCTO_MOSTRAR_UNO_PAGINADO);
+                        saltoDeLinea();
+                        imprimirTitulo("MOVER PRODUCTO DE 1 A 0");
+                        pElement = eGestion_pedirIdYBuscar(that,
+                                                           eProducto_getId,
+                                                           PRODUCTO_MSJ_INGRESE_ID,
+                                                           PRODUCTO_MSJ_REINGRESE_ID,
+                                                           PRODUCTO_ID_MIN,
+                                                           PRODUCTO_ID_MAX);
+                        if(pElement == NULL)
+                        {
+                            imprimirEnPantalla("\nNo se encontro el ID ingresado");
+                            pausa();
+                        }
+                    }
+
+                    limpiarPantallaYMostrarTitulo("MOVER PRODUCTO DE 1 A 0");
+                    imprimirEnPantalla(PRODUCTO_MOSTRAR_UNO_CABECERA);
+                    eProducto_mostrarUno(pElement);
+                    confirmacion = pedirConfirmacion("\nConfirma que desea mover dicho producto");
+
+                    if(confirmacion == 'S')
+                    {
+                        pElement = that->pop(that, that->indexOf(that, pElement));
+                        this->add(this, pElement);
+                        that->sort(that, eProducto_compararPorId, ASC);
+                        that->sort(this, eProducto_compararPorId, ASC);
+                        imprimirEnPantalla("\nSe movio el producto del deposito 1 al 0");
+                    }
+                    else
+                    {
+                        imprimirEnPantalla(MSJ_CANCELO_GESTION);
+                    }
+                    //returnAux = OK;
+                }
+
+                break;
+            case 0:
+                break;
+        }
+    }
+    else
+    {
+        imprimirEnPantalla("\nError en asignacion de punteros");pausa();
+    }
+
+    pausa();
+
 }
 /**************************** ORDENAMIENTO *******************************************************/
 int eProducto_compararPorId(void* this, void* that)
