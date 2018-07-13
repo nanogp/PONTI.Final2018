@@ -131,106 +131,30 @@ void eProducto_mostrarUno(void* this)
     }
 }
 /**************************** GESTION DE DATOS ***************************************************/
-//int eProducto_modificarUno(void* this)
-//{
-//    int returnAux = CHECK_POINTER;
-//    eMenu menuModificar = {/*titulo del menu*/{"Que desea modificar?"},
-//                           /*cantidad de opciones*/5,
-//                           /*codigos*/{1,2,3,
-//                                       9,0},
-//                           /*descripciones*/"\n  1. Descripcion"
-//                                            "\n  2. Cantidad"
-//                                            "\n  3. Tarjeta"
-//                                            "\n  9. FINALIZAR CAMBIOS"
-//                                            "\n  0. CANCELAR"};
-//    void* registro;
-//    int opcion;
-//    const int huboCambios = 1;
-//    char finalizar = 'N';
-//
-//    if(this != NULL)
-//    {
-//        returnAux = OK;
-//        registro = (eProducto*) this;
-//        do
-//        {
-//            limpiarPantallaYMostrarTitulo(MSJ_MODIFICANDO_REGISTRO);
-//            imprimirEnPantalla(MSJ_DATOS_A_MODIFICAR);
-//
-//            imprimirEnPantalla(PRODUCTO_MOSTRAR_UNO_CABECERA);
-//            eProducto_mostrarUno(registro);
-//            saltoDeLinea();
-//
-//            opcion = eMenu_pedirOpcion(&menuModificar);
-//            switch(opcion)
-//            {
-//                case 1:
-//                    eProducto_setDescripcion(registro, eProducto_pedirDescripcion());
-//                    returnAux = huboCambios;
-//                    break;
-//                case 2:
-//                    eProducto_setCantidad(registro, eProducto_pedirCantidad());
-//                    returnAux = huboCambios;
-//                    break;
-//                case 3:
-//                    eProducto_setTarjeta(registro, eProducto_pedirTarjeta());
-//                    returnAux = huboCambios;
-//                    break;
-//                case 4:
-//                    returnAux = huboCambios;
-//                    break;
-//                case 5:
-//                    returnAux = huboCambios;
-//                    break;
-//                case 6:
-//                    returnAux = huboCambios;
-//                    break;
-//                case 7:
-//                    returnAux = huboCambios;
-//                    break;
-//                case 8:
-//                    returnAux = huboCambios;
-//                    break;
-//                case 9:
-//                    finalizar = 'S';
-//                    break;
-//                case 0:
-//                    finalizar = 'S';
-//                    returnAux = OK;
-//                    break;
-//            }
-//        }
-//        while(finalizar == 'N');
-//    }
-//    return returnAux;
-//}
-//-----------------------------------------------------------------------------------------------//
-//char* eProducto_parserATexto(void* this, int bufferSize)
-//{
-//    char* returnAux = NULL;
-//    void* producto;
-//
-//    if(this != NULL)
-//    {
-//        returnAux = eString_new(bufferSize);
-//
-//        if(returnAux != NULL)
-//        {
-//            producto = (eProducto*) this;
-//            strcpy(returnAux, "");
-//            strcat(returnAux, intToChar(eProducto_getId(producto)));
-//            strcat(returnAux, ",");
-//            strcat(returnAux, eProducto_getDescripcion(producto));
-//            strcat(returnAux, ",");
-//            strcat(returnAux, eProducto_getCantidad(producto));
-//            strcat(returnAux, ",");
-//            strcat(returnAux, floatToChar(eProducto_getTarjeta(producto), 0));
-//            strcat(returnAux, "\n");
-//        }
-//    }
-//
-//    return returnAux;
-//}
+char* eProducto_parserATexto(void* this, int bufferSize)
+{
+    char* returnAux = NULL;
+    void* producto;
+
+    if(this != NULL)
+    {
+        returnAux = eString_new(bufferSize);
+
+        if(returnAux != NULL)
+        {
+            producto = (eProducto*) this;
+            strcpy(returnAux, "");
+            strcat(returnAux, intToChar(eProducto_getId(producto)));
+            strcat(returnAux, ",");
+            strcat(returnAux, eProducto_getDescripcion(producto));
+            strcat(returnAux, ",");
+            strcat(returnAux, intToChar(eProducto_getCantidad(producto)));
+            strcat(returnAux, "\n");
+        }
+    }
+
+    return returnAux;
+}
 //-----------------------------------------------------------------------------------------------//
 void* eProducto_parserAVoid(char* this, int bufferSize)
 {
@@ -507,6 +431,95 @@ int eProducto_manejarStockProductos(ArrayList* this, ArrayList* that, int operac
     {
         imprimirEnPantalla("\nError en asignacion de punteros");pausa();
     }
+
+    pausa();
+    return returnAux;
+}
+//-----------------------------------------------------------------------------------------------//
+int eGestion_actualizarArchivos(ArrayList* this, ArrayList* that)
+{
+    int returnAux = CHECK_POINTER;
+    FILE* pFile0;
+    FILE* pFile1;
+    char* ruta0 = "dep0.csv";
+    char* ruta1 = "dep1.csv";
+    char* modoEscritura = "w";
+    void* pElement;
+    char* buffer;
+    int errorLecturaRegistro = 0;
+    int regProcesados = 0;
+
+    if(this != NULL && that != NULL)
+    {
+        returnAux = CHECK_FILE;
+
+        pFile0 = fopen(ruta0, modoEscritura);
+        pFile1 = fopen(ruta1, modoEscritura);
+
+        if(pFile0 == NULL || pFile1 == NULL)
+        {
+            if(pFile0 == NULL)
+            {
+                printf(GESTION_MSJ_ARCHIVO_ERROR, ruta0);
+            }
+            else
+            {
+                printf(GESTION_MSJ_ARCHIVO_ERROR, ruta1);
+            }
+        }
+        else
+        {
+            for(int i=0 ; i<this->len(this) ; i++)
+            {
+                pElement = this->get(this, i);
+                buffer = eProducto_parserATexto(pElement, 2000);
+
+                if(pElement != NULL && buffer != NULL)
+                {
+                    fputs(buffer, pFile0);
+                    regProcesados++;
+                }
+                else
+                {
+                    errorLecturaRegistro++;
+                };
+            }
+            fclose(pFile0);
+
+            printf("\nArchivo %s actualizado", ruta0);
+            printf(MSJ_REG_PROCESADOS, regProcesados);
+            if(errorLecturaRegistro > 0)
+            {
+                printf("\nHubo errores leyendo %d pElements", errorLecturaRegistro);
+            }
+
+            for(int i=0 ; i<that->len(that) ; i++)
+            {
+                pElement = that->get(that, i);
+                buffer = eProducto_parserATexto(pElement, 2000);
+
+                if(pElement != NULL && buffer != NULL)
+                {
+                    fputs(buffer, pFile1);
+                    regProcesados++;
+                }
+                else
+                {
+                    errorLecturaRegistro++;
+                };
+            }
+            fclose(pFile1);
+
+            printf("\nArchivo %s actualizado", ruta1);
+            printf(MSJ_REG_PROCESADOS, regProcesados);
+            if(errorLecturaRegistro > 0)
+            {
+                printf("\nHubo errores leyendo %d pElements", errorLecturaRegistro);
+            }
+
+            returnAux = OK;
+        }//endif pFile
+    }//endif this
 
     pausa();
     return returnAux;

@@ -45,12 +45,15 @@ int main()
                 break;
             case 3:
                 eProducto_moverProductos(listaDep0, listaDep1);
+                eGestion_actualizarArchivos(listaDep0, listaDep1);
                 break;
             case 4:
                 eProducto_manejarStockProductos(listaDep0, listaDep1, -1);
+                eGestion_actualizarArchivos(listaDep0, listaDep1);
                 break;
             case 5:
                 eProducto_manejarStockProductos(listaDep0, listaDep1, 1);
+                eGestion_actualizarArchivos(listaDep0, listaDep1);
                 break;
             case 0:
                 salirDelPrograma = pedirConfirmacion("Confirma que desea salir del programa?");

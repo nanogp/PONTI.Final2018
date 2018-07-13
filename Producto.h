@@ -58,6 +58,7 @@ int eProducto_cargarArchivos(ArrayList* this, ArrayList* that);
 int eProducto_listarDeposito(ArrayList* this, ArrayList* that);
 int eProducto_moverProductos(ArrayList* this, ArrayList* that);
 int eProducto_manejarStockProductos(ArrayList* this, ArrayList* that, int operacion);
+int eGestion_actualizarArchivos(ArrayList* this, ArrayList* that);
 
 /**************************** LISTADO DE DATOS ***************************************************/
 void eProducto_mostrarUno(void* producto);
