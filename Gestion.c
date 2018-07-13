@@ -543,24 +543,24 @@ int eGestion_cargarArchivoTexto(ArrayList* this,
                                 void* (*pParseAVoid)(char*,int),
                                 int (*pComparar)(void*, void*),
                                 char* titulo,
-                                int bufferSize)
+                                int bufferSize,
+                                char* ruta)
 {
     int returnAux = CHECK_POINTER;
     FILE* pFile;
-    char* ruta;
     char* modoLectura = "rb";
     char* buffer;
     void* pElement;
     int errorNuevoRegistro = 0;
     int regProcesados = 0;
 
-    if(this != NULL && (*pComparar) != NULL && (*pParseAVoid)!= NULL && titulo != NULL)
+    if(this != NULL && (*pComparar) != NULL && (*pParseAVoid)!= NULL && titulo != NULL && ruta != NULL)
     {
         returnAux = CHECK_FILE;
 
         limpiarPantallaYMostrarTitulo(titulo);
 
-        ruta = eString_newParam(GESTION_MSJ_INGRESE_RUTA_TEXTO, GESTION_MSJ_REINGRESE_RUTA_TEXTO, GESTION_RUTA_LARGO_MAX);
+        //ruta = eString_newParam(GESTION_MSJ_INGRESE_RUTA_TEXTO, GESTION_MSJ_REINGRESE_RUTA_TEXTO, GESTION_RUTA_LARGO_MAX);
 
         pFile = fopen(ruta, modoLectura);
 
@@ -583,6 +583,7 @@ int eGestion_cargarArchivoTexto(ArrayList* this,
             }
             else
             {
+                fgets(buffer, bufferSize-1, pFile);//desecho cabecera
                 fgets(buffer, bufferSize-1, pFile);
 
                 while(!feof(pFile))

@@ -72,7 +72,7 @@ int eGestion_listado(ArrayList* this, void (*pMostrar)(void*), char* titulo, cha
 /**************************** ARCHIVOS ***********************************************************/
 int eGestion_cargarArchivoDatos(ArrayList* this, int (*pComparar)(void*, void*), void* (*pConstructor)(), int sizeOfStruct, char* titulo);
 int eGestion_guardarArchivoDatos(ArrayList* this, int sizeOfStruct, char* titulo, char* msjListaVacia);
-int eGestion_cargarArchivoTexto(ArrayList* this, void* (*pParseAVoid)(char*, int), int (*pComparar)(void*, void*), char* titulo, int bufferSize);
+int eGestion_cargarArchivoTexto(ArrayList* this, void* (*pParseAVoid)(char*, int), int (*pComparar)(void*, void*), char* titulo, int bufferSize, char* ruta);
 int eGestion_guardarArchivoTexto(ArrayList* this, char* (*pParseATexto)(void*, int), char* titulo, char* msjListaVacia, int bufferSize);
 
 /**************************** TITULOS ************************************************************/

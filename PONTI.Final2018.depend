@@ -1,0 +1,55 @@
+# depslib dependency file v1.0
+1531508837 source:d:\github\ponti.final2018\arraylist.c
+	"ArrayList.h"
+
+1531508837 d:\github\ponti.final2018\arraylist.h
+	"General.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1531508837 d:\github\ponti.final2018\general.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1531508837 source:d:\github\ponti.final2018\general.c
+	"General.h"
+
+1531511257 source:d:\github\ponti.final2018\gestion.c
+	"Gestion.h"
+	"General.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1531511156 d:\github\ponti.final2018\gestion.h
+	"ArrayList.h"
+
+1531511108 source:d:\github\ponti.final2018\main.c
+	<stdio.h>
+	<stdlib.h>
+	"General.h"
+	"Gestion.h"
+	"Menu.h"
+	"Producto.h"
+
+1531508837 d:\github\ponti.final2018\menu.h
+
+1531511122 d:\github\ponti.final2018\producto.h
+	"General.h"
+	"Gestion.h"
+	"Menu.h"
+	"ArrayList.h"
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
+1531508837 source:d:\github\ponti.final2018\menu.c
+	"Menu.h"
+	"General.h"
+	<stdio.h>
+
+1531511221 source:d:\github\ponti.final2018\producto.c
+	"Producto.h"
+

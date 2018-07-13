@@ -3,6 +3,7 @@
 #include "General.h"
 #include "Gestion.h"
 #include "Menu.h"
+#include "Producto.h"
 
 
 int main()
@@ -25,7 +26,7 @@ int main()
     ArrayList* listaDep0 = al_newArrayList();
     ArrayList* listaDep1 = al_newArrayList();
 
-    if(listadoService == NULL || listadoEntry == NULL)
+    if(listaDep0 == NULL || listaDep1 == NULL)
     {
         returnAux = CHECK_POINTER;
     }
@@ -37,30 +38,29 @@ int main()
         switch(opcion)
         {
             case 1:
-                eService_cargarTxt(listadoService);
-                eEntry_cargarTxt(listadoEntry);
+                eProducto_cargarArchivos(listaDep0, listaDep1);
                 break;
             case 2:
-                eEntry_procesar(listadoEntry, listadoService);
+
                 break;
             case 3:
                 break;
             case 4:
-                eGestion_listado(listadoEntry,
-                                 eEntry_mostrarUno,
-                                 ENTRY_LISTADO_TITULO,
-                                 ENTRY_MOSTRAR_UNO_CABECERA,
-                                 ENTRY_MSJ_LISTA_VACIA,
-                                 ENTRY_MOSTRAR_UNO_PAGINADO);
+                eGestion_listado(listaDep0,
+                                 eProducto_mostrarUno,
+                                 PRODUCTO_LISTADO_TITULO,
+                                 PRODUCTO_MOSTRAR_UNO_CABECERA,
+                                 PRODUCTO_MSJ_LISTA_VACIA,
+                                 PRODUCTO_MOSTRAR_UNO_PAGINADO);
                                  pausa();
                 break;
             case 5:
-                eGestion_listado(listadoService,
-                                 eService_mostrarUno,
-                                 SERVICE_LISTADO_TITULO,
-                                 SERVICE_MOSTRAR_UNO_CABECERA,
-                                 SERVICE_MSJ_LISTA_VACIA,
-                                 SERVICE_MOSTRAR_UNO_PAGINADO);
+                eGestion_listado(listaDep1,
+                                 eProducto_mostrarUno,
+                                 PRODUCTO_LISTADO_TITULO,
+                                 PRODUCTO_MOSTRAR_UNO_CABECERA,
+                                 PRODUCTO_MSJ_LISTA_VACIA,
+                                 PRODUCTO_MOSTRAR_UNO_PAGINADO);
                                  pausa();
                 break;
             case 0:
